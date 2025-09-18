@@ -6,6 +6,7 @@ import morgan from 'morgan';
 // const colors=require('colors');
 import { connectDB } from './config/db.js';
 import authRoute from './routes/authRoute.js';
+import categoryRoute from './routes/categoryRoute.js';
 import restaurantRoute from './routes/restaurantRoute.js';
 import testRoute from './routes/testRoute.js';
 import userRoute from './routes/userRoute.js';
@@ -26,6 +27,7 @@ app.use('/api/v1/test',testRoute);
 app.use('/api/v1/auth', authRoute)
 app.use('/api/v1/user', userRoute)
 app.use('/api/v1/restaurant', restaurantRoute)
+app.use('/api/v1/category', categoryRoute)
 
 
 
