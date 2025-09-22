@@ -107,3 +107,64 @@ export const getFoodByRestaurantController=async(req,res)=>{
         })
     }
 }
+
+export const updateFoodController=async(req,res)=>{
+    try {
+        const foodId=req.params.id;
+     if(!foodId){
+        return res.status(400),send({success:false,
+            message:"No food id found"
+        })
+    }
+        const food=await foodModel.findById(foodId)
+        if(!food){
+            return res.status(400),send({success:false,
+                message:"No food  found"
+            })}
+            const {
+                title, description, price, restaurant, imageUrl, foodTags, category, code,isAvailable, rating
+            }=req.body
+        const updatedFood=await foodModel.findByIdAndUpdate(foodId,
+{title, description, price, restaurant, imageUrl, foodTags, category, code,isAvailable, rating},
+{new:true}
+
+        )
+
+        res.status(200).send({
+            success:true,
+            message:"Food item updated"
+        })
+        } catch (error) {
+        res.status(500).send({
+            success:false,
+            message:"Error updateing food",error
+        })
+    }
+}
+
+export const deleteFoodController=async(req,res)=>{
+    try {
+        const foodId=req.params.id;
+        if(!foodId){
+            return res.status(400),send({success:false,
+                message:"No food id found"
+            })
+        }
+        const food=await foodModel.findById(foodId)
+        if(!food){
+            return res.status(400),send({success:false,
+                message:"No food  found"
+            })}
+
+          await foodModel.findByIdAndDelete(foodId)
+          res.status(200).send({
+            success:true,
+            message:"Food item deleted"
+        })
+    } catch (error) {
+        res.status(500).send({
+            success:false,
+            message:"Error updateing food",error
+        })
+    }
+}
